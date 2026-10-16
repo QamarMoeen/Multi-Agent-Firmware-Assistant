@@ -1,40 +1,11 @@
 
 from google.adk.agents import Agent
 
-
-# ==========================================
-# SAMPLE DATA
-# ==========================================
-
-# Temporary inventory data.
-# Later, we will store this in SQLite.
-COMPONENTS = [
-    {
-        "name": "ESP32 DevKit",
-        "category": "microcontroller",
-        "quantity": 2,
-        "notes": "Development board"
-    },
-    {
-        "name": "DHT11",
-        "category": "sensor",
-        "quantity": 1,
-        "notes": "Temperature and humidity sensor"
-    },
-    {
-        "name": "IR Receiver",
-        "category": "sensor",
-        "quantity": 2,
-        "notes": "Infrared receiver module"
-    },
-    {
-        "name": "16x2 LCD",
-        "category": "display",
-        "quantity": 1,
-        "notes": "Character display"
-    },
-]
-
+from .database import (
+    list_components,
+    search_components,
+    get_component_by_id,
+)
 
 # Placeholder project records.
 # Replace these descriptions with your actual projects.
@@ -56,39 +27,6 @@ PROJECTS = [
         "microcontrollers": [],
     },
 ]
-
-
-# ==========================================
-# COMPONENT TOOLS
-# ==========================================
-
-def list_components() -> dict:
-    """List all components in the hardware inventory."""
-
-    return {
-        "components": COMPONENTS,
-        "total_component_types": len(COMPONENTS),
-    }
-
-
-def search_components(keyword: str) -> dict:
-    """Search the component inventory by name, category, or notes."""
-
-    keyword = keyword.strip().lower()
-
-    matches = [
-        component
-        for component in COMPONENTS
-        if keyword in component["name"].lower()
-        or keyword in component["category"].lower()
-        or keyword in component["notes"].lower()
-    ]
-
-    return {
-        "search_term": keyword,
-        "matches": matches,
-        "count": len(matches),
-    }
 
 
 # ==========================================
@@ -122,27 +60,38 @@ def search_projects(keyword: str) -> dict:
 # SPECIALIST AGENT 1: COMPONENTS
 # ==========================================
 
+
 component_agent = Agent(
-    model="gemini-2.5-flash",
+    model="gemini-3.5-flash-lite",
     name="component_agent",
     description=(
-        "Answers questions about hardware owned, "
-        "including component names, categories, "
-        "quantities, and inventory searches."
+        "Manages and searches the firmware engineer's local "
+        "hardware inventory, including component names, "
+        "categories, quantities, manufacturers, models, "
+        "interfaces, and recorded specifications."
     ),
     instruction="""
-    You are a hardware inventory assistant for a firmware engineer.
+    You are a hardware inventory specialist for a firmware engineer.
 
-    Use list_components to list the inventory.
-    Use search_components to find specific components.
+    Available tools:
+    - list_components: retrieve all components in the inventory.
+    - search_components: search by component name, category,
+      manufacturer, model, interface, or notes.
+    - get_component_by_id: retrieve a specific inventory record.
 
-    Base inventory answers on tool results.
-    Do not invent components or quantities.
-
-    If a component is not found, say that it was not found
-    in the current inventory.
+    Select the tool appropriate for the user's request.
+    Base inventory answers on returned database records.
+    Never invent components, quantities, or specifications.
+    If a field is missing, say that it has not been recorded.
+    If no component matches, explain that it was not found.
+    Do not claim that two components are electrically compatible
+    unless the required specifications have been verified.
     """,
-    tools=[list_components, search_components],
+    tools=[
+        list_components,
+        search_components,
+        get_component_by_id,
+    ],
     disallow_transfer_to_parent=True,
     disallow_transfer_to_peers=True,
 )
@@ -153,7 +102,7 @@ component_agent = Agent(
 # ==========================================
 
 project_agent = Agent(
-    model="gemini-2.5-flash",
+    model="gemini-3.5-flash-lite",
     name="project_agent",
     description=(
         "Answers questions about completed firmware, "
@@ -184,7 +133,7 @@ project_agent = Agent(
 # ==========================================
 
 root_agent = Agent(
-    model="gemini-2.5-flash",
+    model="gemini-3.5-flash-lite",
     name="firmware_assistant",
     description=(
         "A personal assistant for firmware and embedded "
