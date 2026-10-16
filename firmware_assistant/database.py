@@ -117,3 +117,93 @@ def get_component_by_id(component_id: int) -> dict:
         "status": "success",
         "component": dict(row),
     }
+
+
+def add_component(
+    name: str,
+    category: str,
+    quantity: int = 0,
+    manufacturer: str = "",
+    model: str = "",
+    voltage_info: str = "",
+    interfaces: str = "",
+    notes: str = "",
+) -> str:
+    """Add a new component to the inventory."""
+
+    name = name.strip()
+    category = category.strip()
+
+    if not name or not category:
+        return "Component name and category are required."
+
+    if quantity < 0:
+        return "Quantity cannot be negative."
+
+    with get_connection() as conn:
+        cursor = conn.execute(
+            """
+            INSERT INTO components
+            (name, category, manufacturer, model, quantity,
+             voltage_info, interfaces, notes)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                name, category, manufacturer, model, quantity,
+                voltage_info, interfaces, notes
+            ),
+        )
+        component_id = cursor.lastrowid
+
+    return f"Added {name} with component ID {component_id}."
+
+
+def update_quantity(component_id: int, change_by: int) -> str:
+    """Increase or decrease a component's quantity."""
+
+    with get_connection() as conn:
+        component = conn.execute(
+            "SELECT name, quantity FROM components WHERE component_id = ?",
+            (component_id,),
+        ).fetchone()
+
+        if component is None:
+            return f"No component found with ID {component_id}."
+
+        new_quantity = component["quantity"] + change_by
+
+        if new_quantity < 0:
+            return (
+                f"Cannot update {component['name']}. "
+                f"Current quantity is {component['quantity']}."
+            )
+
+        conn.execute(
+            "UPDATE components SET quantity = ? WHERE component_id = ?",
+            (new_quantity, component_id),
+        )
+
+    return (
+        f"Updated {component['name']}: "
+        f"quantity is now {new_quantity}."
+    )
+
+
+def update_component_notes(component_id: int, notes: str) -> str:
+    """Replace the notes for a component."""
+
+    with get_connection() as conn:
+        component = conn.execute(
+            "SELECT name FROM components WHERE component_id = ?",
+            (component_id,),
+        ).fetchone()
+
+        if component is None:
+            return f"No component found with ID {component_id}."
+
+        conn.execute(
+            "UPDATE components SET notes = ? WHERE component_id = ?",
+            (notes, component_id),
+        )
+
+    return f"Updated notes for {component['name']}."
