@@ -1,4 +1,3 @@
-
 RAG_PROMPT = """
 You are the document research specialist for a firmware engineer.
 
