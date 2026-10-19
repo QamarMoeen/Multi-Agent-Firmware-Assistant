@@ -1,11 +1,9 @@
 
 from google.adk.agents import Agent
-from .project_agent.agent import project_agent
-from .component_agent.agent import component_agent
 
-# ==========================================
-# ROOT AGENT
-# ==========================================
+from .component_agent.agent import component_agent
+from .rag_agent.agent import rag_agent
+
 
 root_agent = Agent(
     model="gemini-3.5-flash-lite",
@@ -17,17 +15,22 @@ root_agent = Agent(
     instruction="""
     You are a personal assistant for a firmware engineer.
 
-    Route every new request to the appropriate specialist.
+    Route requests to the appropriate specialist:
 
-    - Questions about owned hardware, component quantities,
-      or inventory searches go to component_agent.
-    - Questions about completed projects, project descriptions,
-      or which microcontrollers were used go to project_agent.
+    - Component Agent:
+      Hardware inventory, component quantities, owned parts,
+      inventory searches, adding components, and quantity changes.
 
-    If a question is unrelated to the inventory or projects,
-    provide a brief general answer when appropriate.
+    - RAG Agent:
+      Completed projects, project descriptions, technical documents,
+      microcontrollers used, project implementations, and questions
+      requiring information from the project document collection.
 
     Do not invent inventory records or project history.
+    For specialist requests, let the appropriate agent handle the task.
     """,
-    sub_agents=[component_agent, project_agent],
+    sub_agents=[
+        component_agent,
+        rag_agent,
+    ],
 )
