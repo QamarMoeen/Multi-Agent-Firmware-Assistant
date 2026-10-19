@@ -1,0 +1,33 @@
+
+Project Name: IoT Security Using Lightweight Machine Learning
+
+Project Category: IoT Security and Machine Learning
+
+Overview:
+This project explores security mechanisms for IoT systems, including
+lightweight encryption research and intrusion detection using
+machine learning.
+
+Security and Machine Learning Components:
+- Tree Parity Machine-based encryption exploration.
+- Autoencoder-based encoding and reconstruction.
+- Intrusion Detection System using a custom-collected dataset.
+- Evaluation of Logistic Regression, Random Forest, MLP Neural
+  Network, and XGBoost models.
+
+Project Focus:
+- Exploring security techniques suitable for IoT environments.
+- Training and evaluating machine learning models for intrusion
+  detection.
+- Comparing model performance using classification metrics.
+
+Knowledge Areas:
+IoT security, lightweight machine learning, autoencoders,
+Tree Parity Machines, intrusion detection, classification,
+model evaluation, XGBoost.
+
+Limitations:
+This record does not specify final deployed performance, dataset
+size, complete feature definitions, or a production deployment.
+Check the original project report and code before quoting metrics
+or claiming a particular security guarantee.

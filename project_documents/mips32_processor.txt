@@ -1,0 +1,28 @@
+
+Project Name: MIPS32 Single-Cycle Processor
+
+Project Category: Digital Design and FPGA
+
+Overview:
+This project implements a single-cycle MIPS32 processor using VHDL
+for a digital hardware design and FPGA workflow.
+
+Software and Technologies:
+- VHDL
+- MIPS32 instruction set architecture
+- FPGA design tools
+
+Project Focus:
+- Hardware description using VHDL.
+- Design of a processor that executes instructions in a single cycle.
+- Digital logic design and processor architecture.
+
+Knowledge Areas:
+VHDL, RTL design, processor datapaths, control logic, instruction
+execution, digital systems, FPGA implementation.
+
+Limitations:
+This record does not list the complete supported instruction set,
+clock frequency, FPGA board model, resource utilization, or
+verification results. Refer to the original source code and reports
+for these details.

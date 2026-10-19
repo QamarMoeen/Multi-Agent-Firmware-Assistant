@@ -1,0 +1,34 @@
+
+Project Name: ESP32 Home Automation System
+
+Project Category: Embedded Systems and IoT
+
+Overview:
+This project implements a home automation prototype using an ESP32
+microcontroller. It combines sensor input and remote control to
+demonstrate monitoring and control of a home environment.
+
+Hardware Components:
+- ESP32 development board
+- DHT11 temperature and humidity sensor
+- IR receiver
+
+Software and Technologies:
+- Embedded C/C++ for microcontroller programming
+- Blynk for monitoring and control
+
+Project Functionality:
+- Reads temperature and humidity data from a DHT11 sensor.
+- Receives commands through an IR receiver.
+- Uses the ESP32 to coordinate the connected hardware.
+- Integrates with Blynk for monitoring and control.
+
+Knowledge Areas:
+ESP32 programming, GPIO, sensor interfacing, IR communication,
+IoT, microcontroller-based automation.
+
+Limitations:
+This record does not specify the exact GPIO pin assignments,
+electrical connections, power requirements, or measured performance.
+Consult the original project code and wiring diagram before using
+this record for hardware-level decisions.

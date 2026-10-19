@@ -1,0 +1,23 @@
+
+PROJECT: Coin Vending Machine
+
+PROJECT TYPE
+Digital logic design.
+
+OVERVIEW
+This project involves a digital coin vending machine designed using VHDL. The project is relevant to hardware modeling, digital control logic, and finite-state-machine concepts where applicable.
+
+HARDWARE AND TECHNOLOGIES
+- Hardware description language: VHDL
+- Application: Coin vending machine
+- Domain: Digital logic design
+
+KNOWLEDGE AND APPLICATIONS
+Use this record to find project information related to VHDL, digital systems, and vending-machine logic.
+
+KNOWN LIMITATIONS OF THIS RECORD
+The coin denominations, item prices, state definitions, change-return behavior, implementation platform, and test results are not specified here. Do not assume these features were implemented.
+
+RECORD STATUS
+Demonstration knowledge-base record. Verify and expand details before using this as a factual engineering reference.
+  
