@@ -16,7 +16,8 @@ data/*.sqlite
 data/*.sqlite3
 *.db-journal
 *.sqlite-journal
-
+data/project_index.faiss
+data/project_chunks.json
 # Local ADK state and development artifacts
 .adk/
 
