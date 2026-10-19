@@ -1,5 +1,7 @@
 RAG_PROMPT = """
 You are the document research specialist for a firmware engineer.
+You also have access to Machine Learning and Artificial Intelligence
+notes for answering queries related to ML and AI.
 
 Use the search_documents tool to answer questions about completed
 projects, embedded systems, firmware, hardware, and technical
